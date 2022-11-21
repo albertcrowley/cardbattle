@@ -9,4 +9,15 @@ public class Game {
         this.Locations = locations;
     }
 
+    public Location getLocationByName(String name){
+        for (Location loc : this.Locations) {
+            if (loc.Name.equals(name)) {
+                return loc;
+            }
+        }
+        return null;
+    }
+
+
+
 }
