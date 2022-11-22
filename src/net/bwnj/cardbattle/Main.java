@@ -13,7 +13,7 @@ public class Main {
 
         List<Location> l = new ArrayList<Location>();
         Location deck = new Location("deck");
-        deck.Cards = DeckBuilder.getOneOfEveryCard();
+        deck.Cards = DeckBuilder.getFiveCardDeck();
 
         l.add(deck);
         l.add(new Location("hand"));

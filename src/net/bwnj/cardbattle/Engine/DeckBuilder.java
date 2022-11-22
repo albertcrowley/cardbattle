@@ -5,16 +5,16 @@ import java.util.List;
 
 public class DeckBuilder {
 
-    public static Deck getOneOfEveryCard() {
+    public static Pile getFiveCardDeck() {
         List<Card> cardSet = new ArrayList<>();
         cardSet.add(new Card(new CardArchitype("one")));
         cardSet.add(new Card(new CardArchitype("two")));
         cardSet.add(new Card(new CardArchitype("three")));
         cardSet.add(new Card(new CardArchitype("four")));
-        return new Deck(cardSet);
+        return new Pile(cardSet);
     }
 
-    public static Deck getStandardPlayingCardDeck() {
+    public static Pile getStandardPlayingCardDeck() {
         List<Card> cardSet = new ArrayList<>();
         for (String suit : new String[]{"Hearts", "Spades", "Diamonds", "Clubs"}) {
             for (String cname: new String[]{"Ace", "King", "Queen", "Jack"}) {
@@ -26,6 +26,6 @@ public class DeckBuilder {
                 cardSet.add(new Card(ca));
             }
         }
-        return new Deck(cardSet, "Playing Cards");
+        return new Pile(cardSet, "Playing Cards");
     }
 }

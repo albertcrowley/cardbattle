@@ -1,29 +1,32 @@
 package net.bwnj.cardbattle.Engine;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class Location {
     public String Name;
-    public Deck Cards;
+    public Pile Cards;
 
     public Location(String name) {
         this.Name = name;
-        this.Cards = new Deck();
+        this.Cards = new Pile();
+    }
+
+    public Location(String name, Pile deck) {
+        this.Name = name;
+        this.Cards = deck;
     }
 
 
-    public Deck getCards() {
+    public Pile getCards() {
         return Cards;
     }
 
-    public void setCards(Deck cards) {
+    public void setCards(Pile cards) {
         Cards = cards;
     }
 
 
     public String toString() {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append("Location: %s\n".formatted(Name));
         for (Card c : this.Cards) {
             sb.append("  %s\n".formatted(c));
