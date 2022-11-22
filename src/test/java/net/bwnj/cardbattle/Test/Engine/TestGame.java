@@ -44,9 +44,4 @@ public class TestGame {
         Assertions.assertSame(topCard, g.get("hand").Cards.get(0));
     }
 
-    @Test
-    void testGitHubActionsFailure() {
-        Assertions.assertTrue(false);
-    }
-
 }
