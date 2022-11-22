@@ -42,8 +42,11 @@ public class TestGame {
         Assertions.assertEquals(handCount + 1, g.get("hand").Cards.size());
         Assertions.assertEquals( drawpileCount - 1, g.get("drawpile").Cards.size());
         Assertions.assertSame(topCard, g.get("hand").Cards.get(0));
+    }
 
-
+    @Test
+    void testGitHubActionsFailure() {
+        Assertions.assertTrue(false);
     }
 
 }
