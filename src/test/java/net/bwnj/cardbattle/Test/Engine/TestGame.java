@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-class GameTest {
+public class TestGame {
     Pile d1 = DeckBuilder.getFiveCardDeck();
     Pile d2 = DeckBuilder.getStandardPlayingCardDeck();
 
