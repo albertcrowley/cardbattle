@@ -1,5 +1,9 @@
 package net.bwnj.cardbattle.Engine;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,20 +18,55 @@ public class DeckBuilder {
         return new Pile(cardSet);
     }
 
-    static CardArchitype architypeHelper (String name, int power) {
+    static CardArchitype architypeHelper(String name, int power) {
         CardArchitype ca = new CardArchitype(name);
         ca.Power = power;
         return ca;
     }
 
+    public static Pile getBaseMonsterDeck() {
+        List<Card> cardSet = new ArrayList<>();
+        JsonNode root;
+        JsonNode baseMonsterDeck;
+
+
+        try (InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream("BaseMonsterDeck.json")) {
+            ObjectMapper mapper = new ObjectMapper();
+            root = mapper.readValue(in, JsonNode.class);
+
+
+            JsonNode decks = root.get("decks");
+            for (int i = 0; i < decks.size(); i++) {
+                baseMonsterDeck = decks.get(i);
+                if (baseMonsterDeck.get("name").textValue().equals("BaseMonsterDeck")) {
+                    JsonNode cards = baseMonsterDeck.get("cards");
+                    for (int j = 0; j < cards.size(); j++) {
+                        JsonNode card = cards.get(j);
+                        CardArchitype ca = new CardArchitype(card.get("name").textValue());
+                        ca.Power = card.get("power").intValue();
+                        ca.Toughness = card.get("toughness").intValue();
+                        ca.Cost = card.get("cost").intValue();
+                        for (int c=0; c < card.get("count").intValue(); c++) {
+                            cardSet.add(new Card(ca));
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return new Pile(cardSet, "Playing Cards");
+    }
+
     public static Pile getStandardPlayingCardDeck() {
         List<Card> cardSet = new ArrayList<>();
         for (String suit : new String[]{"Hearts", "Spades", "Diamonds", "Clubs"}) {
-            cardSet.add(new Card (architypeHelper("Ace of %s".formatted(suit), 1 )));
-            cardSet.add(new Card (architypeHelper("King of %s".formatted(suit), 13 )));
-            cardSet.add(new Card (architypeHelper("Queen of %s".formatted(suit), 12 )));
-            cardSet.add(new Card (architypeHelper("Jack of %s".formatted(suit), 11 )));
-            for (int i=2; i <= 10; i++) {
+            cardSet.add(new Card(architypeHelper("Ace of %s".formatted(suit), 1)));
+            cardSet.add(new Card(architypeHelper("King of %s".formatted(suit), 13)));
+            cardSet.add(new Card(architypeHelper("Queen of %s".formatted(suit), 12)));
+            cardSet.add(new Card(architypeHelper("Jack of %s".formatted(suit), 11)));
+            for (int i = 2; i <= 10; i++) {
                 CardArchitype ca = new CardArchitype("%s of %s".formatted(i, suit));
                 ca.Power = i;
                 cardSet.add(new Card(ca));

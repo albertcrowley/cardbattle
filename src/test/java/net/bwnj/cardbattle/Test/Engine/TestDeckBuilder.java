@@ -27,6 +27,16 @@ public class TestDeckBuilder {
         }
     }
 
+    @Test
+    void baseMonsterDeckTest() {
+        Pile monsters = DeckBuilder.getBaseMonsterDeck();
+
+        Assertions.assertTrue( monsters.size() > 5);
+        Assertions.assertFalse(monsters.get(0).Architype.Name.isBlank());
+        Assertions.assertEquals(monsters.get(0).Architype.Name, "Goblin");
+
+    }
+
 
 
 }
