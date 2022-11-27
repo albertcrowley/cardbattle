@@ -13,7 +13,7 @@ public class CardArchitype {
     }
 
     public String toString() {
-        return Name + " [" + Cost + "]";
+        return "%s [ (%d) %d/%d ]".formatted(Name, Cost, Power, Toughness);   // Name + " [" + Cost + "]";
     }
 
 }

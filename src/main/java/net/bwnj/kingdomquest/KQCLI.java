@@ -12,6 +12,8 @@ import java.util.Scanner;
 public class KQCLI {
 
     static Game game;
+    static Integer score;
+    static boolean gameOver = false;
 
 
     static void initGame() {
@@ -24,6 +26,8 @@ public class KQCLI {
 
         game.get("drawpile").Cards.shuffle();
         game.moveCards(5, "drawpile", "hand");
+
+        score = 0;
     }
 
     public static boolean printGameState() {
@@ -32,9 +36,8 @@ public class KQCLI {
         System.out.println("\nCards on the table");
         System.out.println(game.get("table"));
 
-        if (game.get("hand").Cards.size() < 1) {
-            return false; // game ends
-        }
+        System.out.println("Your score: %d".formatted(score));
+
 
         return true;
     }
@@ -53,6 +56,36 @@ public class KQCLI {
         }
     }
 
+    static void tick() {
+        Integer cardNumber = getInput();
+        if (cardNumber != null) {
+            game.moveSpecificCard(cardNumber-1, "hand", "table");
+            //now draw
+            game.moveCards(1,"drawpile", "hand");
+        }
+
+        scoreTheGame();
+    }
+
+    static void scoreTheGame() {
+        score = game.get("table").Cards.stream().map((card) -> card.Architype.Power).reduce(0, (subtotal, i) -> subtotal + i);
+
+        if (score > 21) {
+            System.out.println("\nGAME OVER. \nSorry you lost. You went over 21!  \nYour ending score was %d.".formatted(score));
+            gameOver = true;
+        }
+
+        if (score == 21) {
+            System.out.println("\nYOU WIN!  Perfect score of 21");
+            gameOver = true;
+        }
+
+        if (game.get("hand").Cards.size() < 1) {
+            gameOver = true;
+        }
+
+    }
+
     public static void main(String[] args) {
         try {
             System.out.println("Welcome to 21 Counter");
@@ -60,11 +93,9 @@ public class KQCLI {
 
             initGame();
 
-            while (printGameState()) {
-                Integer cardNumber = getInput();
-                if (cardNumber != null) {
-                    game.moveCards(1, "hand", "table");
-                }
+            while ( ! gameOver) {
+                printGameState();
+                tick();
             }
 
             System.out.println("GAME OVER!");
