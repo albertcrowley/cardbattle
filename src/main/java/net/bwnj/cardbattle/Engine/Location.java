@@ -27,9 +27,11 @@ public class Location {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Location: %s\n".formatted(Name));
+//        sb.append("Location: %s\n".formatted(Name));
+        int i = 1;
         for (Card c : this.Cards) {
-            sb.append("  %s\n".formatted(c));
+            sb.append("  %d -  %s\n".formatted(i,c));
+            i++;
         }
         return sb.toString();
     }

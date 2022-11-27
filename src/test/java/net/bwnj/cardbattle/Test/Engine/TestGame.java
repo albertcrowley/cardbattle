@@ -44,4 +44,49 @@ public class TestGame {
         Assertions.assertSame(topCard, g.get("hand").Cards.get(0));
     }
 
+    @Test
+    void testMoveSpecificCard() {
+        // test taking a card out of the middle of your hand and putting it on the drawpile
+        Game g = getOddGame();
+        Card midCard = g.get("hand").Cards.get(2);
+
+        System.out.println(midCard);
+
+        int handCount = g.get("hand").Cards.size();
+        int drawpileCount = g.get("drawpile").Cards.size();
+
+        boolean moved = g.moveSpecificCard(2, "hand", "drawpile");
+        Assertions.assertTrue(moved);
+
+        Assertions.assertEquals(handCount - 1, g.get("hand").Cards.size());
+        Assertions.assertEquals( drawpileCount + 1, g.get("drawpile").Cards.size());
+        Assertions.assertSame(midCard, g.get("drawpile").Cards.get(0));
+    }
+
+    @Test
+    void testCantMoveTooManyCards() {
+        Game g = getOddGame();
+        Integer moved = g.moveCards(99999, "drawpile", "hand");
+        Assertions.assertNull(moved);
+
+        moved = g.moveCards(g.get("drawpile").Cards.size() + 1, "drawpile", "hand");
+        Assertions.assertNull(moved);
+
+        Integer expected = g.get("drawpile").Cards.size();
+        moved = g.moveCards(g.get("drawpile").Cards.size(), "drawpile", "hand");
+        Assertions.assertEquals(expected, moved);
+
+        g = getOddGame();
+
+        boolean bool = g.moveSpecificCard(9999, "hand", "drawpile");
+        Assertions.assertFalse(bool);
+
+        bool = g.moveSpecificCard(g.get("hand").Cards.size(), "hand", "drawpile");
+        Assertions.assertFalse(bool);
+
+        bool = g.moveSpecificCard(g.get("hand").Cards.size()-1, "hand", "drawpile");
+        Assertions.assertTrue(bool);
+
+    }
+
 }

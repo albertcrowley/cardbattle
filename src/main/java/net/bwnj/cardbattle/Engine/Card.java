@@ -9,7 +9,7 @@ public class Card {
     }
 
     public String toString() {
-        return "instance of " + Architype.toString();
+        return Architype.toString();
     }
 
 

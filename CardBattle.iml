@@ -24,5 +24,8 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="badlogicgames.gdx.platform" level="project" />
+    <orderEntry type="library" name="badlogicgames.gdx.freetype" level="project" />
+    <orderEntry type="library" name="javatuples" level="project" />
   </component>
 </module>

@@ -31,7 +31,11 @@ public class Game {
      * @param destLocation Dest location of the card
      * @return Number of cards moved
      */
-    public int moveCards(int count, String sourceLocation, String destLocation){
+    public Integer moveCards(int count, String sourceLocation, String destLocation){
+
+        if (count > get(sourceLocation).Cards.size()) {
+            return null;
+        }
 
         int i = 0;
         for (; i< count; i++) {
@@ -40,12 +44,17 @@ public class Game {
             Card card = source.remove(0);
             dest.add(0, card);
         }
-
-
-
-
-
         return i;
     }
 
+    public boolean moveSpecificCard(int sourcePosition, String sourceLocation, String destLocation) {
+        if (sourcePosition >= get(sourceLocation).Cards.size()) {
+            return false;
+        }
+        Card card = get(sourceLocation).Cards.remove(sourcePosition);
+        get(destLocation).Cards.add(0,card);
+
+        return true;
+    }
 }
+
