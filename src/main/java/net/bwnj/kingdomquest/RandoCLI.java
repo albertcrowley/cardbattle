@@ -8,24 +8,30 @@ import net.bwnj.cardbattle.Engine.Pile;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Random;
 
-public class KQCLI {
+public class RandoCLI {
 
     static Game game;
     static Integer score;
     static boolean gameOver = false;
 
+    static Random rand = new Random();
 
     static void initGame() {
-        Pile p = DeckBuilder.getStandardPlayingCardDeck();
 
         Location l1 = new Location("hand");
-        Location l2 = new Location("drawpile", p);
+        Location l2 = new Location("drawpile", DeckBuilder.getRandoDeck());
         Location l3 = new Location("table");
-        KQCLI.game = new Game(List.of(new Location[]{l1, l2, l3}));
+        Location l4 = new Location("monsters", DeckBuilder.getRandoDeck());
+        Location l5 = new Location("field");
+
+        RandoCLI.game = new Game(List.of(new Location[]{l1, l2, l3, l4, l5}));
 
         game.get("drawpile").Cards.shuffle();
+        game.get("monsters").Cards.shuffle();
         game.moveCards(5, "drawpile", "hand");
+        game.moveCards(rand.nextInt(2)+1, "monsters", "field");
 
         score = 0;
     }
@@ -33,6 +39,8 @@ public class KQCLI {
     public static boolean printGameState() {
         System.out.println("Your hand:");
         System.out.println(game.get("hand"));
+        System.out.println("\nMonsters!");
+        System.out.println(game.get("field"));
         System.out.println("\nCards on the table");
         System.out.println(game.get("table"));
 
@@ -88,7 +96,7 @@ public class KQCLI {
 
     public static void main(String[] args) {
         try {
-            System.out.println("Welcome to 21 Counter");
+            System.out.println("Welcome to Rando Battle");
 
 
             initGame();

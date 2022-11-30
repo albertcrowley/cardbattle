@@ -34,9 +34,22 @@ public class TestDeckBuilder {
         Assertions.assertTrue( monsters.size() > 5);
         Assertions.assertFalse(monsters.get(0).Architype.Name.isBlank());
         Assertions.assertEquals(monsters.get(0).Architype.Name, "Goblin");
-
     }
 
+    @Test
+    void randoDeckTest() {
+        Pile monsters = DeckBuilder.getRandoDeck();
+
+        System.out.println(monsters);
+
+        Assertions.assertTrue( monsters.size() > 5);
+        Assertions.assertFalse(monsters.get(0).Architype.Name.isBlank());
+        Assertions.assertTrue(monsters.get(1).Architype.Power > 0);
+        Assertions.assertTrue(monsters.get(2).Architype.Toughness > 0);
+        Assertions.assertTrue(monsters.get(3).Architype.Cost > 0);
+
+
+    }
 
 
 }

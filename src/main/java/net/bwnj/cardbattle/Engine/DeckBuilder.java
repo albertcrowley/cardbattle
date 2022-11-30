@@ -2,10 +2,12 @@ package net.bwnj.cardbattle.Engine;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.maximeroussy.invitrode.WordGenerator;
 
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class DeckBuilder {
 
@@ -23,6 +25,29 @@ public class DeckBuilder {
         ca.Power = power;
         return ca;
     }
+
+
+    public static Pile getRandoDeck() {
+        List<Card> cardSet = new ArrayList<>();
+        WordGenerator wg = new WordGenerator();
+        Random random = new Random();
+
+        for (int i=0; i< 60; i++) {
+            cardSet.add(
+                    new Card(
+                            new CardArchitype(
+                                    wg.newWord(random.nextInt(4) + 4),
+                                    "Monster",
+                                    1,
+                                    random.nextInt(4) + 1,
+                                    random.nextInt(4) + 1
+                            )
+                    )
+            );
+        }
+        return new Pile(cardSet, "Playing Cards");
+    }
+
 
     public static Pile getBaseMonsterDeck() {
         List<Card> cardSet = new ArrayList<>();

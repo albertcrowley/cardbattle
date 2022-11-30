@@ -4,6 +4,8 @@ package net.bwnj.cardbattle.Engine;
 public class Location {
     public String Name;
     public Pile Cards;
+    public String Format = "$n [ $p/$t ]\n";
+
 
     public Location(String name) {
         this.Name = name;
@@ -28,11 +30,7 @@ public class Location {
     public String toString() {
         StringBuilder sb = new StringBuilder();
 //        sb.append("Location: %s\n".formatted(Name));
-        int i = 1;
-        for (Card c : this.Cards) {
-            sb.append("  %d -  %s\n".formatted(i,c));
-            i++;
-        }
+        sb.append(this.Cards.toString());
         return sb.toString();
     }
 
